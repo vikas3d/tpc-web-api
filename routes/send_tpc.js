@@ -14,23 +14,23 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    console.log(req.body);
-     Customers.findOne({unique_id:req.body.wallet_id},function (error,doc) {
-         if(doc){
-             /*customer: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
-             //sentBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
-             current_tpc_price: Number,
-                 total_amount: Number,
-                 tcp_coins: Number,
-                 purchase_status: { type: Boolean, default: false }
-             */
-             pur = new Purchase();
-             pur.customer = doc._id;
-             pur.purchase_status=false;
-             pur.tcp_coins = req.body.coins;
-             Rate.findOne({}).exec(function (error,rate) {
-                 pur.total_amount = rate.rate*req.body.coins;
-                 pur.save(function(error,save){
+     console.log(req.body);
+     Customers.findOne({unique_id:req.body.unique_id},function (err,receiver) {
+         if(receiver){
+             newpurch = new Purchase();
+             newpurch.customer = receiver._id;
+             newpurch.purchase_status=true;
+             newpurch.tcp_coins = req.body.coins;
+             Purchase.findOne({customer:req.body.sender},function (err,sender) {
+               console.log(sender);
+               sender.tcp_coins -= req.body.coins;
+               sender.save(function (err, result) {
+                   console.log(result);
+               })
+              })
+             Rate.findOne({}).sort({_id: -1}).exec(function (error, rate) {
+                 newpurch.total_amount = rate.rate*req.body.coins;
+                 newpurch.save(function(error,save){
                      res.send({
                          error,save
                      });

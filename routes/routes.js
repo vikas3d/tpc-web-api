@@ -41,45 +41,6 @@ module.exports = function (app, passport) {
         });
     });
 
-    // Approve customer
-    app.post('/customer/approve', isLoggedIn, function (req, res) {
-
-        const formidable = require('formidable');
-        const Customers = require("../models/customers");
-        const form = new formidable.IncomingForm();
-        form.parse(req, function (err, fields, files) {
-            //console.log(fields.cid);
-            Customers.update({_id: fields.cid}, {$set: {status: true}}, function (err, result) {
-                if (err)
-                    console.log(result);
-                return res.send({error: false, message: "Customers approved"});
-            });
-
-        });
-
-    });
-
-    // Deny customer
-    app.post('/customer/deny', isLoggedIn, function (req, res) {
-
-        const formidable = require('formidable');
-        const Customers = require("../models/customers");
-        const form = new formidable.IncomingForm();
-        form.parse(req, function (err, fields, files) {
-            //console.log(fields.cid);
-            Customers.remove({
-                _id: fields.cid
-            }, function (err, user) {
-                if (err)
-                    res.send(err);
-
-                return res.send({message: 'Request denied'});
-            });
-
-        });
-
-    });
-
     // Approve tpc buying
     app.post('/customer/approve-tcp', isLoggedIn, function (req, res) {
 
@@ -94,10 +55,10 @@ module.exports = function (app, passport) {
                     if (error) {
                         return res.send({error: true, message: error});
                     }
-                    require("../models/tcc_rate").findOne({}, function (error, rate) {
+                        Rates.findOne({}).sort({_id: -1}).exec(function (error, rate) {
                         rate.stock -= doc.tcp_coins;
                         rate.save(function (error, doc) {
-                            return res.send({error: false, message: "Tpc approved"});
+                            return res.send({error: false, message: "Tpc approved!"});
                         })
                     })
                 })
@@ -148,7 +109,13 @@ module.exports = function (app, passport) {
     // Send tpc =========================
     app.get('/send-coins', function (req, res) {
 
-        res.render('templates/send-coins.ejs', {results: "yoo"});
+        const Customers = require("../models/customers");
+
+        Customers.find({},function (err,customers) {
+
+          res.render('templates/send-coins.ejs', {results: customers});
+
+        });
 
     });
 
