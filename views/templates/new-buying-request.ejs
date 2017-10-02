@@ -1,0 +1,65 @@
+<% include ../header.ejs %>
+
+<% include ../scripts/approve-tcp.js %>
+
+<div style="padding-top:50px;"> </div>
+
+<% include ../sidebar.ejs %>
+<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+          <div class="well">
+             <h2>New TPC Buying Requests</h2>
+            <table class="table">
+                     <thead class="thead-inverse">
+                     <tr>
+                         <th>#</th>
+                         <th>Name</th>
+                         <th>Email</th>
+                         <th>Wallet ID</th>
+                         <th>Coints to buy</th>
+                         <th>TPC Price</th>
+                         <th>Total</th>
+                         <th>Action</th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                     <% i = 1;%>
+                     <% purchase.forEach(function(rsl) {
+                       if(rsl.customer){
+                      %>
+
+                     <tr>
+                         <td id=""><%= i %></td>
+                         <td id=""><%= rsl.customer.firstname %> <%= rsl.customer.lastname %></td>
+                         <td id=""><%= rsl.customer.email %></td>
+                         <td id=""><%= rsl.customer.unique_id %></td>
+                         <td id=""> <%= rsl.tcp_coins %></td>
+                         <td id=""> <%= rsl.current_tpc_price %></td>
+                         <td id=""> <%= rsl.total_amount %></td>
+                         <td id="">
+
+                           <button type="submit" style="color:#000" class="approvetcp btn-warning" data="<%= rsl._id %>">Approve <span class="glyphicon glyphicon-send"></span></button>
+
+                           <img id="loadertcp_<%= rsl._id %>" src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif" style="display:none;margin-left: 10px;">
+
+                           <button type="submit" style="color:#000" class="denytcp btn-warning" data="<%= rsl._id %>">Deny <span class="glyphicon glyphicon-send"></span></button>
+
+                           <img id="loaderdn_<%= rsl._id %>" src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif" style="display:none;margin-left: 10px;">
+
+                       </td>
+                       <td>
+                           <div id="resultbuy_<%= rsl._id %>" class="tcpbuy" style="color: whitesmoke;  background: green none repeat scroll 0% 0%; text-align: center;"></div>
+                       </td>
+                     </tr>
+                     <% i++ ;} }); %>
+                     </tbody>
+
+                 </table>
+            </div>
+        </div>
+     </div>
+</div>
+<hr>
+<% include ../footer.ejs %>

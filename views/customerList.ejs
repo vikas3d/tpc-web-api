@@ -1,0 +1,47 @@
+<% include header.ejs %>
+
+<% include ./scripts/scripts.js %>
+<div style="padding-top:50px;"> </div>
+
+<% include sidebar.ejs %>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <h2>Registered users</h2>
+                  <table class="table">
+                           <thead class="thead-inverse">
+                           <tr>
+                               <th>#</th>
+                               <th>Name</th>
+                               <th>Email</th>
+                               <th>Wallet ID</th>
+                               <th>Purchase</th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <% i = 1;%>
+                           <% results.forEach(function(rsl) {
+                             if(rsl){
+                             %>
+
+                           <tr>
+                               <td id=""><%= i %></td>
+                               <td id=""><%= rsl.firstname %> <%= rsl.lastname %></td>
+                               <td id=""><%= rsl.email %></td>
+                               <td id=""><%= rsl.unique_id %></td>
+                               <td id="">
+                                 <form action="/customerList/<%= rsl._id %>">
+                                 <button type="submit" style="color:#000" class="btn-warning" data="<%= rsl._id %>">Check <span class="glyphicon glyphicon-send"></span></button>
+                                 </form>
+                                  <span id="rsl_<%= rsl._id %>" style="color: darkgreen"></span>
+                             </td>
+                           </tr>
+                           <% i++; } }); %>
+                           </tbody>
+
+                       </table>
+
+                </div>
+            </div>
+            <hr>
+<% include footer.ejs %>

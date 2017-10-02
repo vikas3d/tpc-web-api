@@ -1,0 +1,105 @@
+<% include header.ejs %>
+<% include ./scripts/scripts.js %>
+
+<div style="padding-top:50px;"> </div>
+
+<% include sidebar.ejs %>
+
+<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <form class="well form-horizontal" id="myform">
+
+                <fieldset>
+                    <!-- Text input-->
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+
+                            <div class="col-md-4">
+
+                                <label style="color:green"><h2>Current Rate: </h2></label>
+
+
+                                <h2><i class="fa fa-inr"></i> <%= results.rate %></h2>
+
+
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <label style="color:green"><h2>Available Coins: </h2></label>
+
+                                <h2><%= results.stock.toFixed(2) %></h2>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Set TPC Price:</label>
+                        <div class="col-md-9 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-rupee"></i></span>
+                                <input type="text" name="rate" id="rate" class="form-control"
+                                       value="<%= results.rate %>" required placeholder="<%= results.rate %>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Add Coins:</label>
+                        <div class="col-md-9 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-bitcoin"></i></span>
+                                <input type="number" min="1" name="coins" id="coins" value="0" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Set Minimum Buying Limit:</label>
+                        <div class="col-md-9 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-rupee"></i></span>
+                                <input type="number" value="<%= results.min_tcc %>" name="tcclimit" id="tcclimit"
+                                       class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-8">
+                            <button class="btn btn-warning" style="float:right;margin-right: 15px;background:#000">
+                                Submit <span class="glyphicon glyphicon-send"></span><img id="loader"
+                                                                                          src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif"
+                                                                                          style="display:none;margin-left: 10px;">
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-8 msg" style="display:none">
+                            <div id="result" class="fa fa-check" style="color: green;"></div>
+                        </div>
+                    </div>
+
+                </fieldset>
+                <input type="hidden" id="avail_coins" name="avail_coins" value=""/>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<hr>
+<% include footer.ejs %>

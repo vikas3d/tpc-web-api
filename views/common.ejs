@@ -1,0 +1,37 @@
+<% include header.ejs %>
+
+<div style="padding-top:50px;"> </div>
+
+<% include sidebar.ejs %>
+
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <table class="table">
+                           <thead class="thead-inverse">
+                           <tr>
+                               <th>Coin Purchased</th>
+                               <th>Coin Value</th>
+                               <th>Total spent amount</th>
+                               <th>Purchase Date</th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                            <% results.forEach(function(rsl) { %>
+                           <tr>
+                               <td id=""><%= rsl.tcp_coins %></td>
+                               <td id=""><%= rsl.current_tpc_price %></td>
+                               <td id=""><%= rsl.total_amount %></td>
+                               <td id=""><%= rsl.createdAt %></td>
+                           </tr>
+                           <% }); %>
+                           </tbody>
+
+                       </table>
+
+
+
+                </div>
+            </div>
+            <hr>
+<% include footer.ejs %>
