@@ -2,7 +2,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-
            // Set new rate
 
             $(".btn").on("click", function(e)
@@ -19,7 +18,7 @@
                 data.append('rate', rate);
                 data.append('tcclimit', $("#tcclimit").val());
                 data.append('stock', $('#coins').val());
-                $("#loader").show();
+                $("#loadingimg").show();
                 $.ajax({
                     url : "rate",
                     type: "POST",
@@ -30,7 +29,7 @@
                       $("#myform")[0].reset();
                       $(".msg").show();
                       $("#result").html(" " + data.message);
-                      $("#loader").hide();
+                      $("#loadingimg").hide();
                       setTimeout(function(){
                           location.reload();
                       }, 2000);
@@ -42,93 +41,31 @@
                 });
           });
 
-          // Aprove and deny new customer //
-
-              $( ".approve" ).each(function(index) {
-                  $(this).on("click", function()
-                  {
-                      var cid = $(this).attr('data');
-                      var data = new FormData();
-                      data.append('cid', cid);
-                      $("#loaderap_"+cid).show();
-                      $.ajax({
-                          url : "/customer/approve",
-                          type: "POST",
-                          data : data,
-                          processData: false,
-                          contentType: false,
-                          success:function(data, textStatus, jqXHR){
-                            $("#resultap_"+cid).html(" " + data.message);
-                            $(".hid").show();
-                            $("#loaderap_"+cid).hide();
-                            setTimeout(function(){
-                                location.reload();
-                            }, 2000);
-                          },
-                          error: function(jqXHR, textStatus, errorThrown){
-                              //if fails
-                          }
-                      });
-                      //  alert(cid+'al');
-              });
-          });
-
-          $(".deny").each(function(index) {
-            $(this).on("click", function()
+$(function()
+    {
+        $("#myform").validate(
+          {
+            rules:
             {
-              //alert('scv');
-              var cid = $(this).attr('data');
-              var data = new FormData();
-              data.append('cid', cid);
-              $("#loaderdn_"+cid).show();
-              $.ajax({
-                  url : "/customer/deny",
-                  type: "POST",
-                  data : data,
-                  processData: false,
-                  contentType: false,
-                  success:function(data, textStatus, jqXHR){
-                    $("#resultap_"+cid).html(" " + data.message);
-                    $(".hid").show();
-                    $("#loaderdn_"+cid).hide();
-                    setTimeout(function(){
-                        location.reload();
-                    }, 2000);
-                  },
-                  error: function(jqXHR, textStatus, errorThrown){
-                      //if fails
-                  }
-              });
+              tcclimit:
+              {
+                required: true,
+                min:1,
+                number:true
+              },
+              rate:
+              {
+                required: true,
+                number:true
+              },
+              description:
+              {
+                required: true,
+                number:true
+              }
+            }
+          });
+    });
 
-                //  alert(cid+'dn');
-            });
-        });
-
-        $(function()
-{
-    $("#myform").validate(
-      {
-        rules:
-        {
-          tcclimit:
-          {
-            required: true,
-            min:1,
-            number:true
-          },
-          rate:
-          {
-            required: true,
-            number:true
-          },
-          description:
-          {
-            required: true,
-            number:true
-          }
-        }
-      });
 });
-
-   });
 </script>

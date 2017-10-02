@@ -3,7 +3,8 @@ const router = express.Router();
 const formidable = require('formidable');
 const bcrypt = require('bcrypt-nodejs');
 const Customer = require("../models/customers");
-
+const randomID = require("random-id");
+const uniqueID = require('../config/uniqueID');
 // Get All customers
 
 router.get('/', function (req, res) {
@@ -15,22 +16,41 @@ router.get('/', function (req, res) {
 // Save new customer
 
 router.post('/', function (req, res) {
-    //console.log(req.headers.host);
-    const newCustomer = new Customer({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: createHash(req.body.password),
-        address: req.body.address,
-        device_id: req.body.device_id,
-        push_notification: req.body.push_notification
+  const defaultId = randomID(12, "a0");
+  const form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields) {
+  const newCustomer = new Customer({
+        firstname: fields.firstname,
+        lastname: fields.lastname,
+        phone: fields.phone,
+        default_id: defaultId + uniqueID,
+        unique_id: defaultId + uniqueID,
+        email: fields.email,
+        password: createHash(fields.password),
+        address: fields.address
     });
 
     newCustomer.save(function (err, customer) {
-        return res.send({error: false, message: "success!"});
+        console.log(err);
+        if(err){
+          var str = err.errmsg;
+          if (str.includes("customers.$unique_id_1")) {
+              return res.send({
+                  error: 'UniqueID', message: "Unique Id already exits,Please user other"
+              });
+          }
+          else {
+              return res.send({
+                  error: 'email', message: "Email Already Exits"
+              });
+          }
+        }
+        else{
+            return res.send({error: false, message: "New customer added"});
+        }
     });
 
+  });
 
 });
 

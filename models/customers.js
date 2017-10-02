@@ -11,7 +11,7 @@ const customerSchema = mongoose.Schema({
   unique_id    : {type:String,unique:true},
   default_id   : String,
   qrcode       : String,
-  email        : {type:String,required:true,unique:true},
+  email        : {type:String,unique:true},
   password     : {type:String,required:true},
   address      : String,
   device_id    : String,

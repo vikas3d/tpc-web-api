@@ -1,6 +1,55 @@
 <% include header.ejs %>
+<script>
+$(document).ready(function() {
+  $(".newcust").on("click", function(e)
+  {
+      e.preventDefault();
+      var firstname =   $("#fname").val();
+      var data = new FormData();
+      data.append('firstname', firstname);
+      data.append('lastname', $("#lname").val());
+      data.append('phone', $("#phone").val());
+      data.append('email', $("#email").val());
+      data.append('password', $("#password").val());
+      data.append('tcc', $("#tcc").val());
+      data.append('unique_id', $("#uniqueID").val());
+      data.append('address', $("#comment").val());
+      $("#loading").show();
+      $.ajax({
+          url : "/customer",
+          type: "POST",
+          data : data,
+          processData: false,
+          contentType: false,
+          success:function(data, textStatus, jqXHR){
+            if(data.error == 'UniqueID'){
+              $(".error").show();
+              $("#loading").hide();
+              $("#resulterr").html(" " + data.message);
 
+            }
+            else if (data.error == 'email') {
+              $(".error").show();
+              $("#loading").hide();
+              $("#resulterr").html(" " + data.message);
+            }
+            else{
+            $("#newcustomer")[0].reset();
+            $(".msg").show();
+            $("#result").html(" " + data.message);
+            $("#loading").hide();
+            setTimeout(function(){
+                location.reload();
+            }, 2000);
+          }
 
+          }
+
+        });
+
+      });
+ });
+</script>
 <div style="padding-top:50px;"> </div>
 
 <% include sidebar.ejs %>
@@ -8,7 +57,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
 
-            <form class="well form-horizontal" method="post" action="/customers" id="myform">
+            <form class="well form-horizontal" method="post" id="newcustomer">
 
                 <fieldset>
                     <!-- Text input-->
@@ -47,7 +96,7 @@
                         <div class="col-md-9 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-tint"></i></span>
-                                <input type="text" name="email" id="email" class="form-control" required>
+                                <input type="email" name="email" id="email" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -78,10 +127,9 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label"></label>
                         <div class="col-md-8">
-                            <button class="btn btn-warning" style="float:right;margin-right: 15px;background:#000"
-                                    disabled>Submit <span class="glyphicon glyphicon-send"></span><img id="loader"
-                                                                                                       src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif"
-                                                                                                       style="display:none;margin-left: 10px;">
+                            <button class="newcust btn-warning" style="float:right;margin-right: 15px;background:#000"
+                                    >Submit <span class="glyphicon glyphicon-send"></span>
+                                    <img id="loading" src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif" style="display:none;margin-left: 10px;">
                             </button>
                         </div>
 
@@ -92,6 +140,9 @@
                         <div class="col-md-8 msg" style="display:none">
                             <div id="result" class="fa fa-check" style="color: green;"></div>
                         </div>
+                        <div class="col-md-8 error" style="display:none">
+                         <div id="resulterr" class="fa fa-check" style="color: red;"></div>
+                       </div>
                     </div>
 
         </div>

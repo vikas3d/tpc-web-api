@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
     newCustomer.save(function (err, customer) {
         if (err) {
             var str = err.errmsg;
-            if (str.includes("tcc.customers.$unique_id_1")) {
+            if (str.includes("customers.$unique_id_1")) {
                 return res.send({
                     success: false, message: "Unique Id already exits,Please user other"
                 });
