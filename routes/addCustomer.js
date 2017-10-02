@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const formidable = require('formidable');
-const Customers = require("../models/addCustomer");
 
 router.get('/', isLoggedIn, function(req, res) {
 
@@ -12,7 +11,6 @@ router.get('/', isLoggedIn, function(req, res) {
 });
 
 module.exports = router;
-
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())

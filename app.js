@@ -22,7 +22,6 @@ const io = require('socket.io')(http);
 
 const index = require('./routes/index');
 const rate = require('./routes/rate');
-const addcustomer = require('./routes/addCustomer');
 const customer = require('./routes/customers');
 const buytcc = require('./routes/buytcc');
 const authenticate = require('./routes/authenticate');
@@ -64,7 +63,6 @@ app.use(function (req, res, next) {
 });
 app.use('/', index);
 app.use('/rate', rate);
-app.use('/addcustomer', addcustomer);
 app.use('/customer', customer);
 app.use('/customer/signup', signup);
 app.use('/customer/login', authenticate);
