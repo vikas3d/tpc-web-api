@@ -1,6 +1,30 @@
 <% include ../header.ejs %>
+<script>
+$(document).ready(function() {
+  $(".send").on("click", function(e)
+  {
+      e.preventDefault();
+      var customer =   $("#customer").val();
+      //alert(customer);
+      var data = new FormData();
+      data.append('customer', customer);
+      data.append('tpc', $("#coins").val());
+      $("#loadsend").show();
+      $.ajax({
+          url : "#",
+          type: "POST",
+          data : data,
+          processData: false,
+          contentType: false,
+          success:function(data, textStatus, jqXHR){
+            alert(data);
+          }
 
-<% include ../scripts/approve-tcp.js %>
+        });
+
+      });
+ });
+</script>
 
 <div style="padding-top:50px;"> </div>
 
@@ -15,13 +39,12 @@
 
                  <fieldset>
                      <!-- Text input-->
-
                      <div class="form-group">
                          <label class="col-md-3 control-label">Select CustomerID:</label>
                          <div class="col-md-9 inputGroupContainer">
                              <div class="input-group">
                                  <span class="input-group-addon"><i class="fa fa-rupee"></i></span>
-                                 <select id="catID" multiple="multiple" class="form-control">
+                                 <select id="customer" multiple="multiple" class="form-control">
                                       <% results.forEach(function(customers) { %>
                                       <option value="<%= customers.unique_id %>"><%= customers.unique_id %></option>
                                       <% }); %>
@@ -44,8 +67,8 @@
                      <div class="form-group">
                          <label class="col-md-4 control-label"></label>
                          <div class="col-md-8">
-                             <button class="btn btn-warning" style="float:right;margin-right: 15px;background:#000" disabled>
-                                 Send <span class="glyphicon glyphicon-send"></span><img id="loadingimg"src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif" style="display:none;margin-left: 10px;">
+                             <button class="send btn-warning" style="float:right;margin-right: 15px;background:#1E2931">
+                                 Send <span class="glyphicon glyphicon-send"></span><img id="loadsend"src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif" style="display:none;margin-left: 10px;">
                              </button>
                          </div>
 

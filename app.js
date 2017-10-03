@@ -62,7 +62,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
     return next();
 });
-app.use('/', index);
+//app.use('/', index);
 app.use('/rate', rate);
 app.use('/newcustomer', newcustomer);
 app.use('/customer', customer);

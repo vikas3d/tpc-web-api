@@ -45,6 +45,24 @@
     #myDiv {
       display: none;
     }
+    .container {
+    	position: absolute;
+    	top: 20%;
+    	bottom: 20%;
+    }
+    .loginform {
+    	background: #1E2931;
+    	padding: 10px 40px;
+    	border-radius: 5px;
+    	box-shadow: 1px 2px 20px 0px #000;
+    	color: #fff;
+    }
+    .mainhead {
+    	text-align: center;
+    	border-bottom: 2px solid green;
+    	padding: 10px;
+    	margin-bottom: 30px;
+    }
     </style>
 
     <script>
@@ -65,9 +83,9 @@
 
 <div  style="display:none;" id="myDiv" class="container">
 
-<div class="col-sm-6 col-sm-offset-3">
+<div class="col-sm-6 col-sm-offset-4 loginform">
 
-    <h1><span class="fa fa-sign-in"></span> Login</h1>
+    <h1 class="mainhead"><span class="fa fa-lock"></span> Admin Authentication</h1>
 
     <% if (message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div>
@@ -86,9 +104,6 @@
 
         <button type="submit" class="btn btn-warning btn-lg">Login</button>
     </form>
-
-    <hr>
-    <p>Or go <a href="/">home</a>.</p>
 
     <div class="text-center">
         <p>Web API by <a href="http://3dvirtuallabs.com/">3dvirtual labs</a>.</p>

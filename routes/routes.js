@@ -4,7 +4,7 @@ module.exports = function (app, passport) {
     const Purchase = require("../models/buytcc");
     // show the home page (will also have our login links)
     app.get('/', function (req, res) {
-        res.render('index.ejs');
+        res.render('login.ejs', {message: req.flash('loginMessage')});
     });
 
     // PROFILE SECTION =========================
