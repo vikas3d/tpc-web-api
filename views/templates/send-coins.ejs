@@ -1,33 +1,6 @@
 <% include ../header.ejs %>
-<script>
-$(document).ready(function() {
-  $(".send").on("click", function(e)
-  {
-      e.preventDefault();
-      var customer =   $("#customer").val();
-      //alert(customer);
-      var data = new FormData();
-      data.append('customer', customer);
-      data.append('tpc', $("#coins").val());
-      $("#loadsend").show();
-      $.ajax({
-          url : "#",
-          type: "POST",
-          data : data,
-          processData: false,
-          contentType: false,
-          success:function(data, textStatus, jqXHR){
-            alert(data);
-          }
-
-        });
-
-      });
- });
-</script>
-
+<% include ../scripts/send-coins.js %>
 <div style="padding-top:50px;"> </div>
-
 <% include ../sidebar.ejs %>
 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
     <div class="panel panel-default">
@@ -67,13 +40,13 @@ $(document).ready(function() {
                      <div class="form-group">
                          <label class="col-md-4 control-label"></label>
                          <div class="col-md-8">
-                             <button class="send btn-warning" style="float:right;margin-right: 15px;background:#1E2931">
+                             <button class="send-coins btn-warning" style="float:right;margin-right: 15px;background:#1E2931">
                                  Send <span class="glyphicon glyphicon-send"></span><img id="loadsend"src="http://res.cloudinary.com/dtyu3roi5/image/upload/v1504249462/ajax-loader_r0c1wu.gif" style="display:none;margin-left: 10px;">
                              </button>
                          </div>
-
                      </div>
 
+                   <div id="result" style="display:none"></div>
 
                  </fieldset>
 

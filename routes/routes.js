@@ -119,6 +119,33 @@ module.exports = function (app, passport) {
 
     });
 
+    // Send tpc =========================
+    app.post('/send_coins', function (req, res) {
+
+      const Customers = require("../models/customers");
+
+      Customers.findOne({customer: req.customer}).exec(function (err, rslt) {
+
+        return res.send({message: rslt});
+
+      });
+
+    });
+
+
+    // Send tpc =========================
+    app.get('/send-coins', function (req, res) {
+
+        const Customers = require("../models/customers");
+
+        Customers.find({},function (err,customers) {
+
+          res.render('templates/send-coins.ejs', {results: customers});
+
+        });
+
+    });
+
     // LOGOUT ==============================
     app.get('/logout', function (req, res) {
         req.logout();
