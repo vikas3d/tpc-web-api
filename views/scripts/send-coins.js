@@ -9,13 +9,12 @@ $(document).ready(function() {
               url : "/send_coins",
               type: "POST",
               data : {customer : customer, coins: coins},
-              processData: false,
-              contentType: false,
+              dataType: 'json',
               success:function(data, textStatus, jqXHR){
-                alert(customer);
+                //alert(customer);
               },
               error: function(jqXHR, textStatus, errorThrown){
-                  alert(customer);
+                //  alert(customer);
               }
           });
         });

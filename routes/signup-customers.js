@@ -31,17 +31,9 @@ router.post('/', function (req, res) {
 
     newCustomer.save(function (err, customer) {
         if (err) {
-            var str = err.errmsg;
-            if (str.includes("customers.$unique_id_1")) {
-                return res.send({
-                    success: false, message: "Unique Id already exits,Please user other"
-                });
-            }
-            else {
-                return res.send({
-                    success: false, message: "Email Already Exits"
-                });
-            }
+          return res.send({
+              success: false, message: err.errmsg
+          });
         }
         else {
             return res.json({success: true, message: 'Signup successfull, please login to your account'});

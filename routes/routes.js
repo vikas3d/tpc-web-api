@@ -124,9 +124,32 @@ module.exports = function (app, passport) {
 
       const Customers = require("../models/customers");
 
+      const Purchase = require("../models/buytcc");
+      //console.log(data);
+
       Customers.findOne({customer: req.customer}).exec(function (err, rslt) {
 
-        return res.send({message: rslt});
+        if(rslt){
+            newpurch = new Purchase();
+            newpurch.customer = rslt._id;
+            newpurch.purchase_status=true;
+            newpurch.tcp_coins = req.coins;
+            Rates.findOne({}).sort({_id: -1}).exec(function (error, rate) {
+              rate.stock -= req.coins;
+              rate.save(function (err, result) {
+
+                console.log({
+                    err,result
+                });
+
+              })
+             })
+            newpurch.save(function(error,save){
+                    res.send({
+                        error,save
+                    });
+            })
+        }
 
       });
 
