@@ -19,7 +19,7 @@ router.post('/', function (req, res) {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         phone: req.body.phone,
-        unique_id: req.body.unique_id + uniqueID,
+        unique_id: defaultId + uniqueID,
         default_id: defaultId + uniqueID,
         qrcode: "http://" + req.headers.host + "/qrimg/" + req.body.firstname + '.png',
         email: req.body.email,
@@ -31,9 +31,17 @@ router.post('/', function (req, res) {
 
     newCustomer.save(function (err, customer) {
         if (err) {
-          return res.send({
-              success: false, message: err.errmsg
-          });
+            var str = err.errmsg;
+            if (str.includes("customers.$unique_id_1")) {
+                return res.send({
+                    success: false, message: "Unique Id already exits,Please user other"
+                });
+            }
+            else {
+                return res.send({
+                    success: false, message: "Email Already Exits"
+                });
+            }
         }
         else {
             return res.json({success: true, message: 'Signup successfull, please login to your account'});
